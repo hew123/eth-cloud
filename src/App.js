@@ -27,7 +27,9 @@ class App extends Component{
       this.setState({contractAddress});
 
         try{
-          await window.ethereum.enable();
+          if(window.ethereum)
+            await window.ethereum.enable();
+
           const accounts = await web3.eth.getAccounts();
           const ownerAddress = accounts[0];
           this.setState({ownerAddress});
@@ -47,7 +49,7 @@ class App extends Component{
             dataList.push(
             //<li key={idList[index]}> {data.name} : {link} </li>);
             <tr><td key={idList[index]}>  {data.name} </td>
-            <td>  <a href={link}> {link} </a></td>
+            <td>  <a href={link}> {data.ipfsHash} </a></td>
             </tr>);
             console.log("data is " + data.name + " :"+ data.ipfsHash);
           }
@@ -57,12 +59,11 @@ class App extends Component{
               {id} </li>
           });*/
           this.setState({dataList});
+          console.log("contract's info retrieved");
 
         } catch(error){
           console.log(error);
         }
-
-        console.log("contract's info retrieved");
 
       };//end of onClick
 
@@ -93,7 +94,9 @@ class App extends Component{
 
         //user's metamask account
         try{
-          await window.ethereum.enable();
+          if(window.ethereum)
+            await window.ethereum.enable();
+
           const accounts = await web3.eth.getAccounts();
           const user = accounts[0];
           console.log('Sending from Metamask account: ' + accounts[0]);
