@@ -15,12 +15,14 @@ class App extends Component{
     returnHash:'',
     transactionHash:'',
     dataList:'',
-    numberOfItems:''
+    numberOfItems:'',
+    errormsg:''
   };
 
     //get contract's info
     getHash = async(event) =>{
       event.preventDefault();
+      //this.setState({errormsg:'hi i am an alert'});
 
       //get hash from contract
       const contractAddress = await cloud.options.address;
@@ -63,6 +65,7 @@ class App extends Component{
 
         } catch(error){
           console.log(error);
+          this.setState({errormsg:'no ethereum account detected'});
         }
 
       };//end of onClick
@@ -117,6 +120,7 @@ class App extends Component{
 
           }catch(error){
             console.log(error);
+            this.setState({errormsg:'no ethereum account detected'});
           }
 
           /*const results = await ipfs.add(this.state.buffer);
@@ -144,6 +148,8 @@ class App extends Component{
 
 
         <button onClick = {this.getHash}> Get Saved Hash </button>
+
+        <h3 className="errormsg"> {this.state.errormsg} </h3>
 
           <table bordered responsive>
                 <thead>
